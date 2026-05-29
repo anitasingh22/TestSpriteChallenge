@@ -12,37 +12,58 @@
 
 ## 2️⃣ Requirement Validation Summary
 
-#### Test login Login with valid credentials
-- **Test Code:** [login_Login_with_valid_credentials.py](./login_Login_with_valid_credentials.py)
-- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/544965e7-09d8-4b5c-953a-be0378039ca8/dfd739d2-a865-4783-86c9-ab58f9ca6694
+#### Test login_valid_credentials Login with valid credentials
+- **Test Code:** [login_valid_credentials_Login_with_valid_credentials.py](./login_valid_credentials_Login_with_valid_credentials.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/265c7376-7263-4a98-8a1b-cb17e5d94c46
 - **Status:** ✅ Passed
 - **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
 ---
 
-#### Test view_employee_list View employee list and search
-- **Test Code:** [view_employee_list_View_employee_list_and_search.py](./view_employee_list_View_employee_list_and_search.py)
-- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/544965e7-09d8-4b5c-953a-be0378039ca8/b2eab326-db6a-4678-b5f6-d425efe1ba1c
+#### Test private_route_redirects_to_login Protect private routes when unauthenticated
+- **Test Code:** [private_route_redirects_to_login_Protect_private_routes_when_unauthenticated.py](./private_route_redirects_to_login_Protect_private_routes_when_unauthenticated.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/be65e891-b335-41f5-b742-f97f7ea4098b
 - **Status:** ✅ Passed
 - **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
 ---
 
-#### Test add_employee Add a new employee
-- **Test Code:** [add_employee_Add_a_new_employee.py](./add_employee_Add_a_new_employee.py)
-- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/544965e7-09d8-4b5c-953a-be0378039ca8/847acacc-6f71-4ca8-93c0-bb447b95b194
+#### Test view_employee_list_and_search View the employee list and perform search
+- **Test Code:** [view_employee_list_and_search_View_the_employee_list_and_perform_search.py](./view_employee_list_and_search_View_the_employee_list_and_perform_search.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/7987c259-0751-4749-8c7f-d7c32f69fae0
 - **Status:** ✅ Passed
 - **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
 ---
 
-#### Test edit_employee Edit an existing employee
-- **Test Code:** [edit_employee_Edit_an_existing_employee.py](./edit_employee_Edit_an_existing_employee.py)
-- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/544965e7-09d8-4b5c-953a-be0378039ca8/8b3ab12f-7731-4bb7-b2ae-7e1b2057b0b9
+#### Test add_employee_via_modal Add an employee via the add employee modal
+- **Test Code:** [add_employee_via_modal_Add_an_employee_via_the_add_employee_modal.py](./add_employee_via_modal_Add_an_employee_via_the_add_employee_modal.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/178a4141-ff3b-48a1-9b12-2a916fc81770
 - **Status:** ✅ Passed
 - **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
 ---
 
-#### Test delete_employee Delete an employee
-- **Test Code:** [delete_employee_Delete_an_employee.py](./delete_employee_Delete_an_employee.py)
-- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/544965e7-09d8-4b5c-953a-be0378039ca8/8255dbfe-97f6-40a5-bd1e-3331c65cdc66
+#### Test edit_employee_details Edit an existing employee
+- **Test Code:** [edit_employee_details_Edit_an_existing_employee.py](./edit_employee_details_Edit_an_existing_employee.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/a829d55b-ee81-42e2-b6f1-290eec9be455
+- **Status:** ✅ Passed
+- **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
+---
+
+#### Test delete_employee Delete an employee from the list
+- **Test Code:** [delete_employee_Delete_an_employee_from_the_list.py](./delete_employee_Delete_an_employee_from_the_list.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/a4b2103e-4062-4e83-9462-c7f1d0d09bd7
+- **Status:** ✅ Passed
+- **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
+---
+
+#### Test logoff_and_relogin Log off and relogin
+- **Test Code:** [logoff_and_relogin_Log_off_and_relogin.py](./logoff_and_relogin_Log_off_and_relogin.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/d5ffe02e-7d35-40c0-8900-826af11683c6
+- **Status:** ✅ Passed
+- **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
+---
+
+#### Test toggle_dark_mode Toggle dark mode in the menu bar
+- **Test Code:** [toggle_dark_mode_Toggle_dark_mode_in_the_menu_bar.py](./toggle_dark_mode_Toggle_dark_mode_in_the_menu_bar.py)
+- **Test Visualization and Result:** https://www.testsprite.com/dashboard/mcp/tests/fc1e0854-255b-41cc-a6a8-307d0fb0e185/f334258f-3a19-4f03-b85d-8db1c258b3f2
 - **Status:** ✅ Passed
 - **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
 ---
