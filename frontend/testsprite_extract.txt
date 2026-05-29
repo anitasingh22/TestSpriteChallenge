@@ -1,0 +1,291 @@
+71400:                 if (testEntity.testStatus !== 'RUNNING') {
+71401:                     completedTests.add(testId);
+71402:                     progress.update(testEntity.testStatus);
+71403:                     // Notify callback when a test completes
+71404:                     if (onProgressUpdate) {
+71405:                         onProgressUpdate(completedTests.size, results);
+71406:                     }
+71407:                     return true;
+71408:                 }
+71409:                 return false;
+71410:             }));
+71411:             if (allCompleted.every(Boolean)) {
+71412:                 progress.stop();
+71413:                 return results;
+71414:             }
+71415:             await new Promise(resolve => setTimeout(resolve, pollInterval));
+71416:         }
+71417:     }
+71418:     async runBackendTest(body) {
+71419:         const response = await this.postJSON(`/mcp/backend-test/run`, body);
+71420:         const testIds = response?.data.testIds;
+71421:         if (!Array.isArray(testIds)) {
+71422:             throw new Error('Invalid response: expected array of test IDs');
+71423:         }
+71424:         return testIds;
+71425:     }
+71426:     async runFrontendTest(body) {
+71427:         const response = await this.postJSON(`/mcp/frontend-test/run`, body);
+71428:         const testIds = response?.data.testIds;
+71429:         if (!Array.isArray(testIds)) {
+71430:             throw new Error('Invalid response: expected array of test IDs');
+71431:         }
+71432:         const result = [];
+71433:         testIds.forEach((testId, index) => {
+71434:             // result.push([body.testCases[index].id, testId]);
+71435:             result.push(testId);
+71436:         });
+71437:         return result;
+71438:     }
+71439:     async reRunFromStep(body) {
+71440:         logger.info(`[reRunFromStep] Request URL: /mcp/frontend-test/rerun-from-step`);
+71441:         logger.withContext('info', '[reRunFromStep] Request params', { testId: body.testId, stepIndex: body.stepIndex, projectId: body.projectId });
+71442:         let response;
+71443:         try {
+71444:             response = await this.postJSON(`/mcp/frontend-test/rerun-from-step`, body);
+71445:         }
+71446:         catch (error) {
+71447:             logger.error(`[reRunFromStep] API call failed: ${error}`);
+71448:             throw new Error(`reRunFromStep API call failed: ${error instanceof Error ? error.message : String(error)}`);
+71449:         }
+71450:         // API returns { testId: string, status: 'RUNNING', message: string }
+71451:         // Extract the testId from the response data
+71452:         if (response?.status === 201 && response?.data?.testId) {
+71453:             const returnedTestId = response.data.testId;
+71454:             logger.info(`[reRunFromStep] Success, returned testId: ${returnedTestId}, status: ${response.data.status}`);
+71455:             return returnedTestId;
+71456:         }
+71457:         throw new Error(`reRunFromStep failed: ${response?.data?.message || response?.statusText || 'Unknown error'}`);
+71458:     }
+71459:     // New function to generate backend test plan
+71460:     async generateBackendTestPlan(body) {
+71461:         const response = await this.postJSON(`/mcp/backend-test/plan`, body);
+71462:         return response?.data.plan;
+71463:     }
+71464:     async generateMcpTestReport(body) {
+71465:         const formattedDate = new Date().toLocaleDateString('en-CA');
+71466:         const totalPassedRate = ((body.testCaseResults.filter(test => test.testStatus === 'PASSED').length / body.testCaseResults.length) * 100).toFixed(2);
+71467:         const testsList = body.testCaseResults.map((test, index) => {
+71468:             const formattedTestStatus = test.testStatus === 'PASSED' ? '✅ Passed' : (test.testStatus === 'FAILED' ? '❌ Failed' : test.testStatus);
+71469:             const testErrorSection = test.testError ? `\n- **Test Error:** ${test.testError}` : '';
+71470:             return `
+71471: #### Test ${test.testCaseId} ${test.testTitle}
+71472: - **Test Code:** [${test.testFileName}](./${test.testFileName})${testErrorSection}
+71473: - **Test Visualization and Result:** ${test.testVisualizationAndResult}
+71474: - **Status:** ${formattedTestStatus}
+71475: - **Analysis / Findings:** {{TODO:AI_ANALYSIS}}.
+71476: ---`;
+71477:         }).join('\n');
+71478:         const testReportContent = `
+71479: # TestSprite AI Testing Report(MCP)
+71480: 
+71481: ---
+71482: 
+71483: ## 1️⃣ Document Metadata
+71484: - **Project Name:** ${body.config.executionArgs?.projectName || "N/A"}
+71485: - **Date:** ${formattedDate}
+71486: - **Prepared by:** TestSprite AI Team
+71487: 
+71488: ---
+71489: 
+71490: ## 2️⃣ Requirement Validation Summary
+71491: ${testsList}
+71492: 
+71493: 
+71494: ## 3️⃣ Coverage & Matching Metrics
+71495: 
+71496: - **${totalPassedRate}** of tests passed
+71497: 
+71498: | Requirement        | Total Tests | ✅ Passed | ❌ Failed  |
+71499: |--------------------|-------------|-----------|------------|
+71500: | ...                | ...         | ...       | ...        |
+71501: ---
+71502: 
+71503: 
+71504: ## 4️⃣ Key Gaps / Risks
+71505: {AI_GNERATED_KET_GAPS_AND_RISKS}
+71506: ---`;
+71507:         fse.writeFileSync(PATHS.RAW_REPORT, testReportContent, 'utf8');
+71508:     }
+71509:     async generateTestSummary(body) {
+71510:         const response = await this.postJSON('/mcp/common/generate-test-summary', body);
+71511:         return response?.data;
+71512:     }
+71513:     async logToBackend(body) {
+71514:         try {
+71515:             await this.postJSON(`/mcp/common/log`, body);
+71516:         }
+71517:         catch (e) {
+71518:             // Only console.error here to avoid recursive logging loop
+71519:             console.error(`Failed to post log: ${e}`);
+71520:         }
+71521:     }
+71522:     async logBatchToBackend(entries) {
+71523:         try {
+71524:             await this.postJSON(`/mcp/common/log-batch`, { entries });
+71525:         }
+71526:         catch (e) {
+71527:             console.error(`Failed to post log batch: ${e}`);
+71528:         }
+71529:     }
+71530:     // ============================================================================
+71531:     // Visual Editor Methods
+71532:     // ============================================================================
+71533:     /**
+71534:      * Get test data including all steps for visual editor
+71535:      *
+71536:      * Backend: GET /mcp/tests/:testId
+71537:      *
+71538:      * @param testId - The test identifier
+71539:      * @returns Test data with all steps
+71540:      */
+71541:     async getTestForVisualEditor(testId) {
+71542:         try {
+71543:             const response = await this.client.get(`/mcp/tests/${testId}`);
+71544:             return response.data;
+71545:         }
+71546:         catch (error) {
+71547:             await this.handleError(error);
+71548:             throw error;
+71549:         }
+71550:     }
+71551:     /**
+71552:      * Update action/step within a test
+71553:      *
+71554:      * Backend: POST /mcp/tests/:testId/actions/:stepIndex
+71555:      *
+71556:      * @param testId - The test identifier
+71557:      * @param stepIndex - The index of the step to update
+71558:      * @param actionUpdate - The action data to update
+71559:      * @returns Update response
+71560:      */
+71561:     async updateTestAction(testId, stepIndex, actionUpdate) {
+71562:         try {
+71563:             logger.info(`Updating test action: testId=${testId}, stepIndex=${stepIndex}, action=${JSON.stringify(actionUpdate)}`);
+71564:             const response = await this.client.post(`/mcp/tests/${testId}/actions/${stepIndex}`, actionUpdate);
+71565:             return response.data;
+71566:         }
+71567:         catch (error) {
+71568:             await this.handleError(error);
+71569:             throw error;
+71570:         }
+71571:     }
+71572: }
+71573: class TunnelAPI {
+71574:     constructor(parent) {
+71575:         this.parent = parent;
+71576:         this.apiPrefix = "/api/tunnel/v2";
+71577:     }
+71578:     async create() {
+71579:         try {
+71580:             const response = await this.parent._client.post(`${this.apiPrefix}`);
+71581:             return response.data;
+71582:         }
+71583:         catch (error) {
+71584:             await this.parent.handleError(error);
+71585:             throw error;
+71586:         }
+71587:     }
+71588:     async resume(data) {
+71589:         try {
+71590:             const response = await this.parent._client.post(`${this.apiPrefix}`, data);
+71591:             return response.data;
+71592:         }
+71593:         catch (error) {
+71594:             await this.parent.handleError(error);
+71595:             throw error;
+71596:         }
+71597:     }
+71598:     async getVersion() {
+71599:         try {
+71600:             const response = await this.parent._client.get(`${this.apiPrefix}/version`);
+71601:             return response.data;
+71602:         }
+71603:         catch (error) {
+71604:             await this.parent.handleError(error);
+71605:             throw error;
+71606:         }
+71607:     }
+71608: }
+71609: 
+71610: var backendClient = /*#__PURE__*/Object.freeze({
+71611:     __proto__: null,
+71612:     TestSpriteAPIClient: TestSpriteAPIClient,
+71613:     getTestSpriteClient: getTestSpriteClient
+71614: });
+71615: 
+71616: // Define the main schema
+71617: const GenerateFrontendTestPlanInputSchema = object({
+71618:     projectPath: ProjectPath,
+71619:     needLogin: boolean().describe('Whether to include login in the test plan, only for frontend test').default(true),
+71620: }).strict();
+71621: // Define the response schema
+71622: const GenerateFrontendTestPlanOutputSchema = NextActionOutputSchema;
+71623: async function generateFrontendTestPlan(params) {
+71624:     logger.withContext('debug', 'Generate frontend test plan params', { projectPath: params.projectPath, needLogin: params.needLogin });
+71625:     params.needLogin;
+71626:     const projectPath = normalizeAbsolutePath(params.projectPath);
+71627:     const config = await readConfig(projectPath);
+71628:     if (!config.loginPassword || !config.loginUser) {
+71629:         logger.warn('Login credentials missing, disabling login in test plan');
+71630:     }
+71631:     // Get all files in prd_files directory
+71632:     const standardPRDPath = path__default.join(projectPath, PATHS.STANDARD_PRD);
+71633:     if (!fse.existsSync(standardPRDPath)) {
+71634:         return GenerateFrontendTestPlanOutputSchema.parse({
+71635:             next_action: [
+71636:                 {
+71637:                     type: "tool_use",
+71638:                     tool: "testsprite_generate_standard_prd",
+71639:                     input: {
+71640:                         projectPath: projectPath,
+71641:                     }
+71642:                 }
+71643:             ],
+71644:         });
+71645:     }
+71646:     const standardPRD = await fse.readJSON(standardPRDPath);
+71647:     // Call TestSprite API to generate test plan
+71648:     const testPlanResponse = await getTestSpriteClient().generateFrontendTestPlan(standardPRD, config.scope);
+71649:     // Save test plan to file
+71650:     const testPlanPath = path__default.join(projectPath, PATHS.FRONTEND_TEST_PLAN);
+71651:     try {
+71652:         // Ensure the directory exists
+71653:         const testPlanDir = path__default.dirname(testPlanPath);
+71654:         if (!fse.existsSync(testPlanDir)) {
+71655:             fse.mkdirSync(testPlanDir, { recursive: true });
+71656:         }
+71657:         // Write test plan to JSON file
+71658:         fse.writeJsonSync(testPlanPath, testPlanResponse, { spaces: 2 });
+71659:     }
+71660:     catch (error) {
+71661:         throw new Error(`Failed to save test plan: ${error}`);
+71662:     }
+71663:     return GenerateFrontendTestPlanOutputSchema.parse({
+71664:         next_action: [
+71665:             {
+71666:                 type: "tool_use",
+71667:                 tool: "testsprite_generate_code_and_execute",
+71668:                 context: {
+71669:                     projectPath: projectPath,
+71670:                     testPlanFilePath: testPlanPath,
+71671:                 }
+71672:             },
+71673:         ],
+71674:     });
+71675: }
+71676: 
+71677: var dist$2 = {};
+71678: 
+71679: var src = {};
+71680: 
+71681: var hasRequiredSrc;
+71682: 
+71683: function requireSrc () {
+71684: 	if (hasRequiredSrc) return src;
+71685: 	hasRequiredSrc = 1;
+71686: 	(function (exports$1) {
+71687: 		var __importDefault = (src && src.__importDefault) || function (mod) {
+71688: 		    return (mod && mod.__esModule) ? mod : { "default": mod };
+71689: 		};
+71690: 		Object.defineProperty(exports$1, "__esModule", { value: true });

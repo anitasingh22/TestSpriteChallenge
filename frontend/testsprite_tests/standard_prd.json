@@ -1,0 +1,31 @@
+{
+  "title": "Employee Manager Application",
+  "description": "Frontend test plan for the Employee Manager app, covering login, employee list viewing, searching, adding, editing, and deleting employees.",
+  "features": [
+    {
+      "name": "Login",
+      "description": "Authenticate users through the login screen.",
+      "route": "/login"
+    },
+    {
+      "name": "View Employee List",
+      "description": "Browse and search employees on the employee list page.",
+      "route": "/list"
+    },
+    {
+      "name": "Add Employee",
+      "description": "Add a new employee through the add employee workflow.",
+      "route": "/list"
+    },
+    {
+      "name": "Edit Employee",
+      "description": "Edit existing employee details.",
+      "route": "/list"
+    },
+    {
+      "name": "Delete Employee",
+      "description": "Delete an employee from the employee list.",
+      "route": "/list"
+    }
+  ]
+}

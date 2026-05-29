@@ -1,0 +1,19 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "loginUser": "admin",
+  "loginPassword": "password",
+  "executionArgs": {
+    "projectName": "frontend",
+    "projectPath": "c:\\Users\\asingh\\Documents\\GitHub\\TestSpriteChallenge\\frontend",
+    "testIds": [],
+    "additionalInstruction": "",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-yD0qSWGA0bBCUseBFI4FGGFS1Y04HxQnTxhsYvJy8bUx4w6CAWbZt7DP4XPwaGHFj5vDFkSsBrAGmZSQviGgI78RVUbv8XKtkASgOGuozaCm9JCBslVRK6dMgelnEPCCb70"
+    }
+  },
+  "serverPort": 53514
+}

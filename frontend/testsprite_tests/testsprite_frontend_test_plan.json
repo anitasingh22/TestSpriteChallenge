@@ -1,0 +1,62 @@
+[
+  {
+    "id": "login",
+    "title": "Login with valid credentials",
+    "description": "Authenticate using the login form and confirm access to the employee list.",
+    "steps": [
+      "Navigate to /login",
+      "Enter a valid username",
+      "Enter a valid password",
+      "Click the Login button",
+      "Verify redirection to /list"
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "view_employee_list",
+    "title": "View employee list and search",
+    "description": "Open the employee list page and search/filter employees.",
+    "steps": [
+      "Navigate to /list",
+      "Verify employee table is displayed",
+      "Enter a search query into the search box",
+      "Verify the table filters results based on search input"
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "add_employee",
+    "title": "Add a new employee",
+    "description": "Add a new employee using the add employee workflow.",
+    "steps": [
+      "Click Add Employee",
+      "Fill Name, Email, and Position fields",
+      "Submit the form",
+      "Verify the new employee appears in the list"
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "edit_employee",
+    "title": "Edit an existing employee",
+    "description": "Update an employee's details using the edit workflow.",
+    "steps": [
+      "Select Edit for an existing employee",
+      "Update the employee's Name, Email, or Position",
+      "Submit the update",
+      "Verify the employee details are updated in the list"
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "delete_employee",
+    "title": "Delete an employee",
+    "description": "Remove an employee using the delete workflow.",
+    "steps": [
+      "Select Delete for an existing employee",
+      "Confirm deletion in the dialog",
+      "Verify the employee no longer appears in the list"
+    ],
+    "priority": "High"
+  }
+]

@@ -1,0 +1,141 @@
+
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47193:    FRONTEND_TEST_PLAN: path.join(TESTSPRITE_DIR, 'testsprite_frontend_test_plan.json'),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47194:    BACKEND_TEST_PLAN: path.join(TESTSPRITE_DIR, 'testsprite_backend_test_plan.json'),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47263:const TestType = _enum$1(["frontend", "backend"]).describe("The type of test, can be detected from the codebase");
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47278:const GenerateCodeAndExecuteInputSchema = object({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47281:    testIds: array(string$1()).describe('The test ids of the test plan, default is empty array, means all test plan will be applied').default([]),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47305:    executionArgs: GenerateCodeAndExecuteInputSchema.extend({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47328:    test_code_file_path: string$1().describe('The absolute path of the test case code (NOT testsprite_xxx_test_plan.json) file starting with the id, if given relative path, please convert it to absolute path. MUST be a valid path in current OS').meta({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47335:const TestPlanItem = object({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47367:    testPlan: array(TestPlanItem),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47369:const RunFrontendTestParam = RunTestParam.extend({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47370:    testPlan: any(),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47372:const FrontendTestCaseResult = object({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:47380:array(FrontendTestCaseResult);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71315:    async generateFrontendTestPlan(standardPRD, targetScope) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71317:            const response = await this.client.post('/mcp/frontend-test/generate-plan', {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71426:    async runFrontendTest(body) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71427:        const response = await this.postJSON(`/mcp/frontend-test/run`, body);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71440:        logger.info(`[reRunFromStep] Request URL: /mcp/frontend-test/rerun-from-step`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71444:            response = await this.postJSON(`/mcp/frontend-test/rerun-from-step`, body);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71459:    // New function to generate backend test plan
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71460:    async generateBackendTestPlan(body) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71617:const GenerateFrontendTestPlanInputSchema = object({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71619:    needLogin: boolean().describe('Whether to include login in the test plan, only for frontend test').default(true),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71622:const GenerateFrontendTestPlanOutputSchema = NextActionOutputSchema;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71623:async function generateFrontendTestPlan(params) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71624:    logger.withContext('debug', 'Generate frontend test plan params', { projectPath: params.projectPath, needLogin: params.needLogin });
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71629:        logger.warn('Login credentials missing, disabling login in test plan');
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71634:        return GenerateFrontendTestPlanOutputSchema.parse({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71647:    // Call TestSprite API to generate test plan
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71648:    const testPlanResponse = await getTestSpriteClient().generateFrontendTestPlan(standardPRD, config.scope);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71649:    // Save test plan to file
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71650:    const testPlanPath = path__default.join(projectPath, PATHS.FRONTEND_TEST_PLAN);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71653:        const testPlanDir = path__default.dirname(testPlanPath);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71654:        if (!fse.existsSync(testPlanDir)) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71655:            fse.mkdirSync(testPlanDir, { recursive: true });
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71657:        // Write test plan to JSON file
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71658:        fse.writeJsonSync(testPlanPath, testPlanResponse, { spaces: 2 });
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71661:        throw new Error(`Failed to save test plan: ${error}`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71663:    return GenerateFrontendTestPlanOutputSchema.parse({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:71670:                    testPlanFilePath: testPlanPath,
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:76490:const FrontendCodeSummarySchema = `
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:76492:type: frontend
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:76576:      ${config.type === "frontend" ? FrontendCodeSummarySchema : BackendCodeSummarySchema}
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:76588:                case "frontend": {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:76592:          ${FrontendCodeSummarySchema}
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:76595:          - type must be "frontend"
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:123376: * Frontend connects on page load, receives updates as they happen.
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:123456:            testType: t.testType || 'FRONTEND',
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:123465:            testType: 'FRONTEND',
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:123542: * Called by updateExecutionStatus in generateCodeAndExecute.ts
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:142322:    // Save test code to file if it exists (frontend only)
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:142323:    // cuz only frontend type support modification
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:142324:    if (testResult?.code && config.type === "frontend") {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:143600:app.get('/api/test_plan', async (req, res) => {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:143927:        if (type === "frontend") {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:143944:        if (type === "frontend") {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:143956:but frontend tests will be limited to 15 high-priority tests to prevent server overload.
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:143997:const GenerateBackendTestPlanInputSchema = object({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144000:const GenerateBackendTestPlanResponseSchema = NextActionOutputSchema;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144001:async function generateBackendTestPlanTool(projectPath) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144003:    logger.withContext('debug', 'Generate backend test plan params', { projectPath });
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144028:        const testPlan = await getTestSpriteClient().generateBackendTestPlan(requestBody);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144029:        logger.info('Backend test plan generated successfully');
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144030:        const testPlanFilePath = path__default.resolve(projectPath, PATHS.BACKEND_TEST_PLAN);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144032:            libExports$1.writeJSONSync(testPlanFilePath, testPlan, { spaces: 2 });
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144035:            logger.info(`${error instanceof Error && error.stack ? error.stack : String(error)}\nTest Plan:\n${JSON.stringify(testPlan, null, 2)}`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144036:            throw new Error(`Failed to save test plan to ${testPlanFilePath}: ${error instanceof Error ? error.message : String(error)}`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144038:        return GenerateBackendTestPlanResponseSchema.parse({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144045:                        testPlanFilePath: testPlanFilePath,
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144054:            throw new Error(`Validation error in backend test plan generation:\n${errorMessages}`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144056:        throw new Error(`Failed to generate backend test plan: ${error instanceof Error ? error.message : String(error)}`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144366:async function generateCodeAndExecuteMCP(args) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144419:                        command: `cd ${projectPath} && node ${fileURLToPath(import.meta.url)} generateCodeAndExecute`
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144453:        return await generateCodeAndExecute(args, executionType);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144459:async function _generateCodeAndExecute({ projectName, projectPath, testIds, additionalInstruction, serverMode }, executionType) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144483:            // Only open the modification UI if local project is running, type is frontend, and test plan exists
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144484:            const frontendTestPlanPath = path__default.resolve(projectPath, PATHS.FRONTEND_TEST_PLAN);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144485:            if (isLocalProjectRunning && type === 'frontend' && fse.existsSync(frontendTestPlanPath)) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144495:        let testPlanFile;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144497:            case "frontend": {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144498:                testPlanFile = PATHS.FRONTEND_TEST_PLAN;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144502:                testPlanFile = PATHS.BACKEND_TEST_PLAN;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144508:        // Read test plan from file
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144509:        const normalizedTestPlanFilePath = path__default.resolve(projectPath, testPlanFile);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144510:        let testPlan;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144512:            testPlan = fse.readFileSync(normalizedTestPlanFilePath, 'utf-8');
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144515:            throw new Error(`Failed to read test plan file at ${normalizedTestPlanFilePath}: ${error instanceof Error ? error.message : String(error)}`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144517:        const ParamType = type == "frontend" ? RunFrontendTestParam : RunBackendTestParam;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144518:        let testPlanObj = JSON.parse(testPlan);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144520:            testPlanObj = testPlanObj.filter((testCase) => testIds.includes(testCase.id));
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144527:        // Test limiting: cap frontend tests to prevent server overload
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144531:        if (type === 'frontend' && effectiveServerMode !== 'production' && testPlanObj.length > MAX_DEV_MODE_TESTS) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144534:            const sorted = [...testPlanObj].sort((a, b) => {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144541:            logger.info(`Dev-mode test cap: selecting ${selected.length} of ${testPlanObj.length} frontend tests (serverMode=${effectiveServerMode})`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144544:            testPlanObj = selected;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144546:        else if (type === 'frontend' && effectiveServerMode === 'production' && testPlanObj.length > MAX_PROD_MODE_TESTS) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144548:            const sorted = [...testPlanObj].sort((a, b) => {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144555:            logger.info(`Prod-mode test cap: selecting ${selected.length} of ${testPlanObj.length} frontend tests (serverMode=${effectiveServerMode})`);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144558:            testPlanObj = selected;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144560:        const totalTests = testPlanObj.length;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144562:        const testCasesProgress = testPlanObj.map((tc) => ({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144594:        if (type === "frontend" && localEndpoint) {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144603:        if (type === "frontend") {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144625:            testPlan: testPlanObj,
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144633:        const processingTestCases = testPlanObj.map((tc) => ({
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144645:            currentTestTitle: testPlanObj[0]?.title || 'Starting tests...',
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144658:            case "frontend": {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144659:                testCaseIds = await testSpriteClient.runFrontendTest(runTestRequestPayload);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144672:                const testCaseId = testPlanObj[idx].id;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144673:                const title = testPlanObj[idx].title;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144675:                const description = result?.description ?? testPlanObj[idx].description;
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144750:                testCaseId: testPlanObj[idx].id,
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144752:                title: testPlanObj[idx].title,
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144784:                description: testPlanObj[idx].description ?? '',
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144818:        // Keep process alive for 1 hour so UI can still access results (frontend only)
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144819:        if (type === 'frontend') {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144839:const generateCodeAndExecute = withSimpleFileLock((...args) => {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144841:}, 'execution.lock', 'Tests are running. Please wait for it to complete or remove the lock file: ')(_generateCodeAndExecute);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144877:            config.type === "frontend" && {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144879:                tool: "testsprite_generate_frontend_test_plan",
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:144883:                tool: "testsprite_generate_backend_test_plan",
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149364:    .command("generateCodeAndExecute")
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149389:        await generateCodeAndExecute(config.executionArgs, "console");
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149444:                name: "testsprite_generate_frontend_test_plan",
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149445:                description: "Generate test plan for frontend test.",
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149446:                inputSchema: toJSONSchema(GenerateFrontendTestPlanInputSchema),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149449:                name: "testsprite_generate_backend_test_plan",
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149450:                description: "Generate a backend test plan with Testsprite.",
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149451:                inputSchema: toJSONSchema(GenerateBackendTestPlanInputSchema),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149455:                description: "Generate and execute tests. Before calling this tool, ensure the local project is running — preferably in production mode (e.g. `npm run build && npm run start` for Next.js, `npm run build && npm run preview` for Vite). If you started the project with a production build+serve command, set serverMode to 'production' (note: serverMode is also auto-detected from the running process). If running a dev server (e.g. npm run dev), leave serverMode as default — frontend tests will be limited to 15 high-priority tests to prevent dev server overload. If local server is running and test plan is already generated, call this tool directly — DO NOT call testsprite_bootstrap first. AI assistant analyzes the test results and saves a markdown report.",
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149456:                inputSchema: toJSONSchema(GenerateCodeAndExecuteInputSchema),
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149501:                case "testsprite_generate_frontend_test_plan": {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149502:                    const args = GenerateFrontendTestPlanInputSchema.parse(request.params.arguments);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149503:                    result = await generateFrontendTestPlan(args);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149506:                case "testsprite_generate_backend_test_plan": {
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149507:                    const args = GenerateBackendTestPlanInputSchema.parse(request.params.arguments);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149508:                    result = await generateBackendTestPlanTool(args.projectPath);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149512:                    const args = GenerateCodeAndExecuteInputSchema.parse(request.params.arguments);
+C:\Users\asingh\AppData\Local\npm-cache\_npx\8ddf6bea01b2519d\node_modules\@testsprite\testsprite-mcp\dist\index.js:149513:                    result = await generateCodeAndExecuteMCP(args);
+

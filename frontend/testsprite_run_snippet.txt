@@ -1,0 +1,201 @@
+144500:             }
+144501:             case "backend": {
+144502:                 testPlanFile = PATHS.BACKEND_TEST_PLAN;
+144503:                 break;
+144504:             }
+144505:             default:
+144506:                 throw Error("Unknown type");
+144507:         }
+144508:         // Read test plan from file
+144509:         const normalizedTestPlanFilePath = path__default.resolve(projectPath, testPlanFile);
+144510:         let testPlan;
+144511:         try {
+144512:             testPlan = fse.readFileSync(normalizedTestPlanFilePath, 'utf-8');
+144513:         }
+144514:         catch (error) {
+144515:             throw new Error(`Failed to read test plan file at ${normalizedTestPlanFilePath}: ${error instanceof Error ? error.message : String(error)}`);
+144516:         }
+144517:         const ParamType = type == "frontend" ? RunFrontendTestParam : RunBackendTestParam;
+144518:         let testPlanObj = JSON.parse(testPlan);
+144519:         if (testIds.length > 0) {
+144520:             testPlanObj = testPlanObj.filter((testCase) => testIds.includes(testCase.id));
+144521:         }
+144522:         // Auto-detect serverMode from the process listening on the port
+144523:         const detectedServerMode = await detectServerMode(localPort);
+144524:         if (detectedServerMode) {
+144525:             logger.info(`Auto-detected serverMode=${detectedServerMode} from process on port ${localPort}`);
+144526:         }
+144527:         // Test limiting: cap frontend tests to prevent server overload
+144528:         const MAX_DEV_MODE_TESTS = 15;
+144529:         const MAX_PROD_MODE_TESTS = 30;
+144530:         const effectiveServerMode = detectedServerMode || serverMode || config.serverMode || 'development';
+144531:         if (type === 'frontend' && effectiveServerMode !== 'production' && testPlanObj.length > MAX_DEV_MODE_TESTS) {
+144532:             const priorityOrder = { 'High': 0, 'Medium': 1, 'Low': 2 };
+144533:             // Stable sort by priority (High first, then Medium, then Low)
+144534:             const sorted = [...testPlanObj].sort((a, b) => {
+144535:                 const pa = priorityOrder[a.priority] ?? 2;
+144536:                 const pb = priorityOrder[b.priority] ?? 2;
+144537:                 return pa - pb;
+144538:             });
+144539:             const selected = sorted.slice(0, MAX_DEV_MODE_TESTS);
+144540:             const skipped = sorted.slice(MAX_DEV_MODE_TESTS);
+144541:             logger.info(`Dev-mode test cap: selecting ${selected.length} of ${testPlanObj.length} frontend tests (serverMode=${effectiveServerMode})`);
+144542:             logger.info(`Selected tests: ${selected.map((t) => `${t.id}[${t.priority}]`).join(', ')}`);
+144543:             logger.info(`Skipped tests: ${skipped.map((t) => `${t.id}[${t.priority}]`).join(', ')}`);
+144544:             testPlanObj = selected;
+144545:         }
+144546:         else if (type === 'frontend' && effectiveServerMode === 'production' && testPlanObj.length > MAX_PROD_MODE_TESTS) {
+144547:             const priorityOrder = { 'High': 0, 'Medium': 1, 'Low': 2 };
+144548:             const sorted = [...testPlanObj].sort((a, b) => {
+144549:                 const pa = priorityOrder[a.priority] ?? 2;
+144550:                 const pb = priorityOrder[b.priority] ?? 2;
+144551:                 return pa - pb;
+144552:             });
+144553:             const selected = sorted.slice(0, MAX_PROD_MODE_TESTS);
+144554:             const skipped = sorted.slice(MAX_PROD_MODE_TESTS);
+144555:             logger.info(`Prod-mode test cap: selecting ${selected.length} of ${testPlanObj.length} frontend tests (serverMode=${effectiveServerMode})`);
+144556:             logger.info(`Selected tests: ${selected.map((t) => `${t.id}[${t.priority}]`).join(', ')}`);
+144557:             logger.info(`Skipped tests: ${skipped.map((t) => `${t.id}[${t.priority}]`).join(', ')}`);
+144558:             testPlanObj = selected;
+144559:         }
+144560:         const totalTests = testPlanObj.length;
+144561:         // Initialize per-test-case status (all pending)
+144562:         const testCasesProgress = testPlanObj.map((tc) => ({
+144563:             testCaseId: tc.id,
+144564:             title: tc.title,
+144565:             description: tc.description,
+144566:             status: 'processing'
+144567:         }));
+144568:         // Update status with total tests count and initial test cases
+144569:         await updateExecutionStatus(serverPort, projectPath, 'running', {
+144570:             executionPhase: 'initializing',
+144571:             totalTests,
+144572:             completedTests: 0,
+144573:             testCases: testCasesProgress
+144574:         });
+144575:         // Read PRD content from file
+144576:         const prdFilePath = path__default.resolve(projectPath, PATHS.STANDARD_PRD);
+144577:         let prdContent;
+144578:         try {
+144579:             prdContent = fse.readFileSync(prdFilePath, 'utf-8');
+144580:         }
+144581:         catch (error) {
+144582:             throw new Error(`Failed to read PRD file at ${prdFilePath}: ${error instanceof Error ? error.message : String(error)}`);
+144583:         }
+144584:         // Update status: starting tunnel
+144585:         await updateExecutionStatus(serverPort, projectPath, 'running', {
+144586:             executionPhase: 'tunnel_starting',
+144587:             totalTests,
+144588:             completedTests: 0
+144589:         });
+144590:         const proxy = await _startTunnel(localPort, projectPath, config);
+144591:         logger.info(`proxy: ${proxy}`);
+144592:         // Pre-flight probe: verify the local app is actually responding before
+144593:         // spending credits on Lambda invocations.
+144594:         if (type === "frontend" && localEndpoint) {
+144595:             await probeLocalEndpoint(localEndpoint);
+144596:         }
+144597:         // Verify the full tunnel path is working before dispatching tests.
+144598:         if (localEndpoint) {
+144599:             logger.info('Verifying tunnel connectivity...');
+144600:             await probeThroughTunnel(localEndpoint, proxy);
+144601:             logger.info('Tunnel connectivity verified.');
+144602:         }
+144603:         if (type === "frontend") {
+144604:             if (loginUser || loginPassword) {
+144605:                 additionalInstruction += "\n" + JSON.stringify({
+144606:                     username: loginUser,
+144607:                     password: loginPassword,
+144608:                 });
+144609:             }
+144610:         }
+144611:         else if (type === "backend" && backendAuthType !== "public") {
+144612:             const authInfo = {
+144613:                 authType: backendAuthType,
+144614:                 credential: backendAuthType === "basic token"
+144615:                     ? { username: backendUsername, password: backendPassword }
+144616:                     : backendAuthType === "API key"
+144617:                         ? { key: backendApiKey || "Authorization", value: backendApiValue }
+144618:                         : backendCredential
+144619:             };
+144620:             additionalInstruction += "\n" + JSON.stringify(authInfo);
+144621:         }
+144622:         const runTestRequestPayload = {
+144623:             name: projectName,
+144624:             instruction: additionalInstruction,
+144625:             testPlan: testPlanObj,
+144626:             prdContent: prdContent,
+144627:             endpoint: localEndpoint,
+144628:             maxAttempts: 3,
+144629:             autoFix: true,
+144630:             proxy: proxy,
+144631:         };
+144632:         // Mark all test cases as processing (tests run in parallel on backend)
+144633:         const processingTestCases = testPlanObj.map((tc) => ({
+144634:             testCaseId: tc.id,
+144635:             title: tc.title,
+144636:             description: tc.description,
+144637:             status: 'processing'
+144638:         }));
+144639:         // Update status: tests running
+144640:         await updateExecutionStatus(serverPort, projectPath, 'running', {
+144641:             executionPhase: 'tests_running',
+144642:             totalTests,
+144643:             completedTests: 0,
+144644:             currentTestIndex: 0,
+144645:             currentTestTitle: testPlanObj[0]?.title || 'Starting tests...',
+144646:             testCases: processingTestCases
+144647:         });
+144648:         // Final liveness check: catch the edge case where the tunnel dies
+144649:         // between probe success and the actual test dispatch call.
+144650:         if (tunnelClientWrapper.currentVersion === 1 && !tunnelClientWrapper.oldTunnelClient.isTunnelConnected()) {
+144651:             throw new Error('Tunnel connection lost before test dispatch. ' +
+144652:                 'The tunnel client disconnected from the server. ' +
+144653:                 'Please check your network connection and try again.');
+144654:         }
+144655:         // Call the backend test execution (this will generate and execute tests)
+144656:         let testCaseIds;
+144657:         switch (type) {
+144658:             case "frontend": {
+144659:                 testCaseIds = await testSpriteClient.runFrontendTest(runTestRequestPayload);
+144660:                 break;
+144661:             }
+144662:             case "backend": {
+144663:                 testCaseIds = await testSpriteClient.runBackendTest(runTestRequestPayload);
+144664:                 break;
+144665:             }
+144666:             default:
+144667:                 throw Error("Unknown type");
+144668:         }
+144669:         // Helper function to build test case progress from results
+144670:         const buildTestCaseProgress = (results) => {
+144671:             return results.map((result, idx) => {
+144672:                 const testCaseId = testPlanObj[idx].id;
+144673:                 const title = testPlanObj[idx].title;
+144674:                 // modification may change case description
+144675:                 const description = result?.description ?? testPlanObj[idx].description;
+144676:                 // If result is undefined/null, test is still processing
+144677:                 if (!result) {
+144678:                     return {
+144679:                         testCaseId,
+144680:                         title,
+144681:                         description,
+144682:                         status: 'processing',
+144683:                     };
+144684:                 }
+144685:                 const testResultUrl = result?.projectId && result?.testId
+144686:                     ? `${Envs.TESTSPRITE_URL}/dashboard/mcp/tests/${result.projectId}/${result.testId}`
+144687:                     : undefined;
+144688:                 // Check if test is still running
+144689:                 if (result.testStatus === 'RUNNING') {
+144690:                     return {
+144691:                         testCaseId,
+144692:                         title,
+144693:                         description,
+144694:                         status: 'processing',
+144695:                         testId: result?.testId,
+144696:                         projectId: result?.projectId,
+144697:                         userId: result?.userId,
+144698:                     };
+144699:                 }
+144700:                 return {

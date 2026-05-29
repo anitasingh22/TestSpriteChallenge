@@ -1,0 +1,104 @@
+version: "2"
+type: frontend
+tech_stack:
+  - language: JavaScript
+  - framework: React
+  - ui_library: MUI
+  - other: Vite
+routes:
+  - path: /login
+    file: src/components/Login.jsx
+    auth_required: false
+    description: User login page
+  - path: /list
+    file: src/components/EmployeeList.jsx
+    auth_required: true
+    description: Employee list page with search, view, edit, delete, and add actions
+  - path: /form
+    file: src/components/EmployeeForm.jsx
+    auth_required: true
+    description: Employee add/edit form
+  - path: /
+    file: src/App.jsx
+    auth_required: true
+    description: Redirects authenticated users to /list and unauthenticated users to /login
+features:
+  - name: Login
+    description: Authenticate existing users with username and password
+    files:
+      - src/components/Login.jsx
+      - src/components/MenuBar.jsx
+    entry_route: /login
+    user_interactions:
+      - Enter username into Username field
+      - Enter password into Password field
+      - Click Login button
+      - See error message on invalid credentials
+    api_calls:
+      - method: POST
+        endpoint: /api/login
+    auth_required: false
+  - name: View Employee List
+    description: Browse and search current employees
+    files:
+      - src/components/EmployeeList.jsx
+      - src/components/MenuBar.jsx
+    entry_route: /list
+    user_interactions:
+      - View the employee table
+      - Use search input to filter employees by name, email, or position
+      - Click Employee List navigation button
+    api_calls:
+      - method: GET
+        endpoint: /api/employees
+    auth_required: true
+  - name: Add Employee
+    description: Create a new employee record
+    files:
+      - src/components/EmployeeForm.jsx
+      - src/components/EmployeeList.jsx
+    entry_route: /list
+    user_interactions:
+      - Click Add Employee button
+      - Fill Name, Email, and Position fields
+      - Click Add Employee button
+      - See success confirmation message
+    api_calls:
+      - method: POST
+        endpoint: /api/employees
+    auth_required: true
+  - name: Edit Employee
+    description: Update an existing employee's details
+    files:
+      - src/components/EmployeeList.jsx
+      - src/components/EmployeeForm.jsx
+    entry_route: /list
+    user_interactions:
+      - Click Edit on an employee row
+      - Modify Name, Email, or Position
+      - Click Update Employee button
+      - See success confirmation message
+    api_calls:
+      - method: PUT
+        endpoint: /api/employees/{id}
+    auth_required: true
+  - name: Delete Employee
+    description: Remove an employee record
+    files:
+      - src/components/EmployeeList.jsx
+    entry_route: /list
+    user_interactions:
+      - Click Delete on an employee row
+      - Confirm deletion in the dialog
+      - See success confirmation message
+    api_calls:
+      - method: DELETE
+        endpoint: /api/employees/{id}
+    auth_required: true
+known_limitations:
+  - issue: Private routes are protected only by localStorage state in the browser.
+    location: src/App.jsx
+    impact: Route access may be bypassed if localStorage is modified and backend session enforcement is absent.
+  - issue: The app depends on a backend /api/login endpoint and has no client-side fallback.
+    location: src/components/Login.jsx
+    impact: The frontend is unusable without a working backend login API.
