@@ -1,6 +1,6 @@
 [
   {
-    "id": "login",
+    "id": "login_valid_credentials",
     "title": "Login with valid credentials",
     "description": "Authenticate using the login form and confirm access to the employee list.",
     "steps": [
@@ -13,36 +13,51 @@
     "priority": "High"
   },
   {
-    "id": "view_employee_list",
-    "title": "View employee list and search",
-    "description": "Open the employee list page and search/filter employees.",
+    "id": "private_route_redirects_to_login",
+    "title": "Protect private routes when unauthenticated",
+    "description": "Confirm that accessing a private route redirects unauthenticated users to /login.",
     "steps": [
-      "Navigate to /list",
-      "Verify employee table is displayed",
-      "Enter a search query into the search box",
-      "Verify the table filters results based on search input"
+      "Navigate to /form while not logged in",
+      "Verify redirection to /login",
+      "Navigate to /list while not logged in",
+      "Verify redirection to /login"
     ],
     "priority": "High"
   },
   {
-    "id": "add_employee",
-    "title": "Add a new employee",
-    "description": "Add a new employee using the add employee workflow.",
+    "id": "view_employee_list_and_search",
+    "title": "View the employee list and perform search",
+    "description": "Open the employee list page, verify employee data, and confirm search filtering works.",
     "steps": [
-      "Click Add Employee",
+      "Login with valid credentials",
+      "Navigate to /list",
+      "Verify the employee table is displayed",
+      "Enter a search query into the search box",
+      "Verify the table filters results based on the search input"
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "add_employee_via_modal",
+    "title": "Add an employee via the add employee modal",
+    "description": "Use the Add Employee button to open the modal, add a new employee, and verify it appears in the list.",
+    "steps": [
+      "Login and navigate to /list",
+      "Click the Add Employee button",
       "Fill Name, Email, and Position fields",
       "Submit the form",
-      "Verify the new employee appears in the list"
+      "Verify the new employee appears in the employee list"
     ],
     "priority": "High"
   },
   {
-    "id": "edit_employee",
+    "id": "edit_employee_details",
     "title": "Edit an existing employee",
-    "description": "Update an employee's details using the edit workflow.",
+    "description": "Modify an existing employee's details and verify the updated values appear.",
     "steps": [
+      "Login and navigate to /list",
       "Select Edit for an existing employee",
-      "Update the employee's Name, Email, or Position",
+      "Change the employee's Name or Position",
       "Submit the update",
       "Verify the employee details are updated in the list"
     ],
@@ -50,13 +65,40 @@
   },
   {
     "id": "delete_employee",
-    "title": "Delete an employee",
-    "description": "Remove an employee using the delete workflow.",
+    "title": "Delete an employee from the list",
+    "description": "Remove an employee using the delete flow and confirm it is no longer visible.",
     "steps": [
-      "Select Delete for an existing employee",
+      "Login and navigate to /list",
+      "Click Delete for an existing employee",
       "Confirm deletion in the dialog",
       "Verify the employee no longer appears in the list"
     ],
     "priority": "High"
+  },
+  {
+    "id": "logoff_and_relogin",
+    "title": "Log off and relogin",
+    "description": "Verify the logoff flow returns the user to the login page and allows fresh login.",
+    "steps": [
+      "Login with valid credentials",
+      "Click the Logoff button",
+      "Verify redirection to /login",
+      "Log in again with valid credentials",
+      "Verify access to /list"
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "toggle_dark_mode",
+    "title": "Toggle dark mode in the menu bar",
+    "description": "Use the theme toggle to switch between light and dark themes.",
+    "steps": [
+      "Login and navigate to any authenticated page",
+      "Click the theme toggle button in the menu bar",
+      "Verify the UI updates to dark mode",
+      "Click the theme toggle again",
+      "Verify the UI returns to light mode"
+    ],
+    "priority": "Medium"
   }
 ]
